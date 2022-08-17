@@ -67,6 +67,7 @@ model Item {
   image     String?
   title     String
   rating    Int
+  category  String   @default("default")
   createdAt DateTime @default(now())
   user      User     @relation(fields: [userId], references: [id])
   userId    String
