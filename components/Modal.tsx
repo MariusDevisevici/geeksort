@@ -1,20 +1,52 @@
-import React, { useState } from "react";
-
-function Modal({ setIsOpen }: { setIsOpen: any }) {
+import { useState } from "react";
+import { trpc } from "../src/utils/trpc";
+import { motion } from "framer-motion";
+function Modal({ setIsOpen, userId }: { setIsOpen: any; userId: string }) {
   const [image, setImage] = useState<any>();
-  const submitHandler = () => {
+  const [title, setTitle] = useState<string>();
+  const [rating, setRating] = useState<number>();
+
+  //// post && db
+  const createPost = trpc.useMutation("createPost");
+  const submitHandler = async () => {
     const img = new FormData();
-    console.log(image[0].size);
 
-    img.append("image", image[0]);
+    if (image && title && rating && userId) {
+      img.append("image", image[0]);
+      const cloudImage = await fetch(
+        "https://api.imgbb.com/1/upload?&key=e35161a7abe965194cbe49a06165db5f",
+        { method: "POST", body: img }
+      )
+        .then((res) => res.json())
+        .then((data) => {
+          return data.data.display_url;
+        });
+      console.log(cloudImage);
+      createPost.mutate({
+        title,
+        rating,
+        userId: userId,
+        image: cloudImage,
+      });
 
-    return fetch(
-      "https://api.imgbb.com/1/upload?&key=e35161a7abe965194cbe49a06165db5f",
-      { method: "POST", body: img }
-    )
-      .then((res) => res.json())
-      .then((data) => console.log(data));
+      setImage(null);
+      setTitle(undefined);
+      setRating(undefined);
+      setIsOpen(false);
+    }
+    if (!image && title && rating && userId) {
+      createPost.mutate({
+        title,
+        rating,
+        userId: userId,
+      });
+      setImage(null);
+      setTitle(undefined);
+      setRating(undefined);
+      setIsOpen(false);
+    }
   };
+
   return (
     <div
       className="fixed w-full h-full  z-10 overflow-auto bg-opacity-50 bg-black top-0 left-0 flex cursor-pointer"
@@ -22,7 +54,10 @@ function Modal({ setIsOpen }: { setIsOpen: any }) {
         setIsOpen(false);
       }}
     >
-      <div
+      <motion.div
+        initial={{ opacity: 0, scale: 0.5 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.6 }}
         className="w-2/3 flex m-auto justify-center bg-white shadow-brutalShadow border-2 border-black p-2"
         onClick={(e: any) => {
           e.stopPropagation();
@@ -35,8 +70,11 @@ function Modal({ setIsOpen }: { setIsOpen: any }) {
             submitHandler();
           }}
         >
-          {/* <div className="relative w-2/3">
+          <div className="relative w-2/3">
             <input
+              onChange={(e: any) => {
+                setTitle(e.target.value);
+              }}
               type="text"
               id="floating_outlined"
               className="shadow-brutalShadow block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent   border-2 border-black appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer focus:shadow-blue-600"
@@ -51,6 +89,10 @@ function Modal({ setIsOpen }: { setIsOpen: any }) {
           </div>
           <div className="relative w-2/3">
             <input
+              onChange={(e: any) => {
+                const ratingToNumber = e.target.value;
+                setRating(Number(ratingToNumber));
+              }}
               type="number"
               id="floating_outlined_2"
               className="shadow-brutalShadow block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent   border-2 border-black appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer focus:shadow-blue-600"
@@ -64,7 +106,7 @@ function Modal({ setIsOpen }: { setIsOpen: any }) {
             >
               Rating
             </label>
-          </div> */}
+          </div>
           <div className="relative w-2/3">
             <input
               onChange={(e) => {
@@ -84,9 +126,14 @@ function Modal({ setIsOpen }: { setIsOpen: any }) {
               Image is OPTIONAL*
             </label>
           </div>
-          <button type="submit">submit</button>
+          <button
+            type="submit"
+            className="shadow-brutalShadow bg-white text-purple-500 p-3 text-xl font-bold border-2 border-black cursor-pointer hover:rotate-6 transition-all ease-in-out duration-300"
+          >
+            Add thing
+          </button>
         </form>
-      </div>
+      </motion.div>
     </div>
   );
 }

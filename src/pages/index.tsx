@@ -1,20 +1,34 @@
 import type { NextPage } from "next";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useSession, signIn, signOut } from "next-auth/react";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { BarLoader } from "react-spinners";
-import { trpc } from "../utils/trpc";
 import { motion } from "framer-motion";
 import Modal from "../../components/Modal";
+import { trpc } from "../utils/trpc";
+import DefaultPostsLists from "../../components/Lists/DefaultPostsLists";
 
 const Home: NextPage = () => {
   ////
   const session = useSession();
   const router = useRouter();
-  const createPost = trpc.useMutation("createPost");
+  const [userPosts, setUserPosts] = useState<any>();
   const [isOpen, setIsOpen] = useState<boolean>(false);
   ////
+
+  const { data, status, isLoading } = trpc.useQuery([
+    "getUserPosts",
+    {
+      userId: session.data?.user?.id,
+    },
+  ]);
+
+  useEffect(() => {
+    if (status === "success") {
+      setUserPosts(data);
+    }
+  }, [isLoading]);
 
   if (session.status === "loading") {
     return (
@@ -28,10 +42,10 @@ const Home: NextPage = () => {
     const userAvatar = session.data.user?.image;
     const userName = session.data.user?.name;
     return (
-      <div className="container m-auto  ">
-        <div className="flex  items-center flex-wrap justify-center mt-10 gap-4">
+      <div className="container m-auto flex flex-col ">
+        <div className="flex  items-center flex-wrap justify-center mt-10 gap-4 border-2 p-3 shadow-brutalShadow border-black">
           <button
-            className="text-2xl  font-black shadow-brutalShadow border-2 p-2 border-black  bg-lime-400 cursor-pointer"
+            className="text-2xl  font-black shadow-brutalShadow border-2 p-2 border-black  bg-red-400   cursor-pointer"
             onClick={() => {
               signOut();
             }}
@@ -41,13 +55,23 @@ const Home: NextPage = () => {
           <ProfileCard imageUrl={userAvatar} userName={userName}></ProfileCard>
         </div>
         <button
+          className="px-6 py-2 text-6xl font-black   shadow-brutalShadow border-2 border-black     bg-lime-300  mx-auto mt-10  hover:rotate-6 transition-all ease-in-out duration-300"
           onClick={() => {
             setIsOpen(true);
           }}
         >
-          as
+          +
         </button>
-        {isOpen && <Modal setIsOpen={setIsOpen}></Modal>}
+
+        {userPosts ? (
+          <DefaultPostsLists userPosts={userPosts}></DefaultPostsLists>
+        ) : (
+          <BarLoader color="purple"></BarLoader>
+        )}
+
+        {isOpen && (
+          <Modal userId={session.data.user?.id!} setIsOpen={setIsOpen}></Modal>
+        )}
       </div>
     );
   }
