@@ -81,9 +81,9 @@ const Home: NextPage = () => {
 
   return (
     <>
-      <div className=" flex-wrap md:flex-nowrap flex   md:gap-10 h-screen md:pl-10 ">
-        <div className="h-2/3 md:h-auto md:w-2/4 w-full flex justify-center items-center  lg:p-24 p-10">
-          <div className="text-white flex flex-col items-center  bg-black w-full h-full rounded-lg font-bold ">
+      <div className="flex flex-col h-screen justify-center gap-36">
+        <div className="">
+          <div className="text-white flex flex-col items-center mt-10 w-3/4 m-auto  bg-black  h-full rounded-lg font-bold ">
             <h1 className=" mt-10 text-4xl">GEEKSORT</h1>
             <button
               className="w-fit  bg-custom rounded-lg mt-24 p-5 text-2xl "
@@ -95,7 +95,7 @@ const Home: NextPage = () => {
             </button>
           </div>
         </div>
-        <div className="w-full md:w-2/4 md:mt-0 -mt-52 relative ">
+        <div className="relative w-full h-full">
           <Image src={"/bgk.jpg"} layout="fill" objectFit="cover"></Image>
         </div>
       </div>
