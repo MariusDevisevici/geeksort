@@ -14,7 +14,11 @@ function defineNextConfig(config) {
 
 export default defineNextConfig({
   images: {
-    domains: ["avatars.githubusercontent.com", "i.ibb.co"],
+    domains: [
+      "avatars.githubusercontent.com",
+      "i.ibb.co",
+      "cdn.discordapp.com",
+    ],
   },
   reactStrictMode: true,
   swcMinify: true,
