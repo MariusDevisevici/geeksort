@@ -3,5 +3,5 @@
 @tailwind utilities;
 
 html {
-  background-color: #161b21;
+  background-image: url("/webb.png");
 }
