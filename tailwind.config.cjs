@@ -9,6 +9,9 @@ module.exports = {
       fontFamily: {
         customFont: ["Nunito", "sans-serif"],
       },
+      backgroundColor: {
+        custom: "hsl(213,20%,11%)",
+      },
     },
   },
   plugins: [],

@@ -80,32 +80,26 @@ const Home: NextPage = () => {
   }
 
   return (
-    <div className="relative ">
-      <div className="container m-auto">
-        <div className="absolute left-0 top-0 h-16 w-16">
-          <div className="absolute transform -rotate-45 bg-red-500 text-center text-white font-semibold py-1 left-[-34px] top-[32px] w-[170px]">
-            Beta Alpha +-
+    <>
+      <div className=" flex-wrap md:flex-nowrap flex   md:gap-10 h-screen md:pl-10 ">
+        <div className="h-2/3 md:h-auto md:w-2/4 w-full flex justify-center items-center  lg:p-24 p-10">
+          <div className="text-white flex flex-col items-center  bg-black w-full h-full rounded-lg font-bold ">
+            <h1 className=" mt-10 text-4xl">GEEKSORT</h1>
+            <button
+              className="w-fit  bg-custom rounded-lg mt-24 p-5 text-2xl "
+              onClick={() => {
+                signIn();
+              }}
+            >
+              Sign In
+            </button>
           </div>
         </div>
-        <nav>
-          <ul className="flex w-full">
-            <li className="bg-neutral-900 px-20 text-teal-400 flex justify-center items-center text-center text-4xl font-bold select-none">
-              GEESKORT
-            </li>
-            <li className="ml-auto">
-              <button
-                className="p-5 bg-teal-400 shadow-brutalShadow border-2 border-black  text-2xl font-black  mt-10 hover:scale-110 ease-in-out transition-all duration-300"
-                onClick={() => {
-                  signIn();
-                }}
-              >
-                Sign In
-              </button>
-            </li>
-          </ul>
-        </nav>
+        <div className="w-full md:w-2/4 md:mt-0 -mt-52 relative ">
+          <Image src={"/bgk.jpg"} layout="fill" objectFit="cover"></Image>
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 
