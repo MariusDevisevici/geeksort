@@ -80,15 +80,32 @@ const Home: NextPage = () => {
   }
 
   return (
-    <>
-      <button
-        onClick={() => {
-          signIn();
-        }}
-      >
-        Sign In
-      </button>
-    </>
+    <div className="relative ">
+      <div className="container m-auto">
+        <div className="absolute left-0 top-0 h-16 w-16">
+          <div className="absolute transform -rotate-45 bg-red-500 text-center text-white font-semibold py-1 left-[-34px] top-[32px] w-[170px]">
+            Beta Alpha +-
+          </div>
+        </div>
+        <nav>
+          <ul className="flex w-full">
+            <li className="bg-neutral-900 px-20 text-teal-400 flex justify-center items-center text-center text-4xl font-bold select-none">
+              GEESKORT
+            </li>
+            <li className="ml-auto">
+              <button
+                className="p-5 bg-teal-400 shadow-brutalShadow border-2 border-black  text-2xl font-black  mt-10 hover:scale-110 ease-in-out transition-all duration-300"
+                onClick={() => {
+                  signIn();
+                }}
+              >
+                Sign In
+              </button>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </div>
   );
 };
 
