@@ -70,7 +70,10 @@ const Home: NextPage = () => {
         )}
 
         {isOpen && (
-          <Modal userId={session.data.user?.id!} setIsOpen={setIsOpen}></Modal>
+          <Modal
+            userId={session.data.user?.id || ""}
+            setIsOpen={setIsOpen}
+          ></Modal>
         )}
       </div>
     );
