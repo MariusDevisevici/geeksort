@@ -111,7 +111,13 @@ const Home: NextPage = () => {
     );
   }
 
-  return <></>;
+  return (
+    <>
+      <div className="mt-10 flex justify-center">
+        <BarLoader color="purple" width={250} height={5}></BarLoader>
+      </div>
+    </>
+  );
 };
 
 export default Home;
