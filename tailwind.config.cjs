@@ -12,6 +12,9 @@ module.exports = {
       backgroundColor: {
         custom: "hsl(213,20%,11%)",
       },
+      zIndex: {
+        minusOne: "-1",
+      },
     },
   },
   plugins: [],

@@ -80,20 +80,28 @@ const Home: NextPage = () => {
   }
 
   return (
-    <div className="flex h-screen sm:flex-nowrap flex-wrap">
-      <div className="relative w-full">
-        <Image src={"/bgk.jpg"} layout="fill" objectFit="cover"></Image>
-      </div>
+    <div className="flex   h-screen sm:flex-nowrap flex-wrap">
       <div className="w-full flex flex-col justify-center items-center">
-        <div className=" bg-white w-3/4 py-20  flex flex-col items-center text-center justify-center">
+        <div className=" bg-white w-3/4 py-20  flex flex-col items-center text-center justify-center shadow-sm">
           <p className="text-2xl font-bold">
             <span className="text-purple-600">Hi</span> there!
           </p>
-          <div>
+          <button
+            className="font-bold relative z-10 text-purple-600 border-purple-600 border-2 hover:text-white  transition-all duration-300 ease-in-out px-4 py-2 my-5 cursor-pointer rounded-md before:z-minusOne  before:absolute before:bg-purple-600 hover:before:w-full  before:w-0   before:h-full before:top-0 before:left-0  before:transition-all before:duration-300 before:origin-left"
+            onClick={() => {
+              signIn();
+            }}
+          >
+            Sign In
+          </button>
+          <div className="flex gap-10">
             <Image src={"/github.png"} width={30} height={30}></Image>
             <Image src={"/discord.png"} width={30} height={30}></Image>
           </div>
         </div>
+      </div>
+      <div className="relative w-full">
+        <Image src={"/bgk.jpg"} layout="fill" objectFit="cover"></Image>
       </div>
     </div>
   );
