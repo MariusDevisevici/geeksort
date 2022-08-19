@@ -17,11 +17,11 @@ function signin({ providers }: { providers: any }) {
             {Object.values(providers).map((provider: any) => {
               return (
                 <div key={provider.name} className="flex items-center gap-2">
-                  <Image
+                  <img
                     src={`/${provider.name}.png`}
                     width={40}
                     height={40}
-                  ></Image>
+                  ></img>
                   <button
                     className={
                       provider.name === "Discord"

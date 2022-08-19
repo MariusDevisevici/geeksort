@@ -7,8 +7,9 @@ import { motion } from "framer-motion";
 import Modal from "../../components/Modal";
 import { trpc } from "../utils/trpc";
 import Link from "next/link";
+import { NextPage } from "next";
 
-const Home = () => {
+const Home: NextPage = () => {
   ////
   const session = useSession();
   const router = useRouter();
@@ -28,6 +29,12 @@ const Home = () => {
       setUserPosts(data);
     }
   }, [isLoading]);
+
+  useEffect(() => {
+    if (session.status === "unauthenticated") {
+      router.push("/homepage/signin");
+    }
+  }, [session.status]);
 
   if (session.status === "loading") {
     return (
@@ -104,9 +111,7 @@ const Home = () => {
     );
   }
 
-  if (session.status === "unauthenticated") {
-    router.push("/homepage/signin");
-  }
+  return <></>;
 };
 
 export default Home;
