@@ -34,7 +34,7 @@ const Home: NextPage = () => {
     if (session.status === "unauthenticated") {
       router.push("/homepage/signin");
     }
-  }, []);
+  }, [session.status]);
 
   if (session.status === "loading") {
     return (
