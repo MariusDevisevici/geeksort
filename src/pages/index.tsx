@@ -105,7 +105,13 @@ const Home: NextPage = () => {
             Sign Out
           </button>
         </div>
-
+        <button
+          onClick={() => {
+            setIsOpen(true);
+          }}
+        >
+          open modal
+        </button>
         {isOpen && <Modal setIsOpen={setIsOpen} userId={userId || ""}></Modal>}
       </div>
     );

@@ -18,6 +18,9 @@ module.exports = {
       textColor: {
         discord: "hsl(230,91%,86%)",
       },
+      fontSize: {
+        extraSmall: "10px",
+      },
     },
   },
   plugins: [],

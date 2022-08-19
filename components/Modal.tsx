@@ -68,97 +68,111 @@ function Modal({ setIsOpen, userId }: { setIsOpen: any; userId: string }) {
         initial={{ opacity: 0, scale: 0.5 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.6 }}
-        className="w-2/3 flex m-auto justify-center bg-white shadow-brutalShadow border-2 border-black p-2"
+        className="w-2/3 flex m-auto justify-center bg-white shadow-md rounded-md   p-2"
         onClick={(e: any) => {
           e.stopPropagation();
         }}
       >
         <form
-          className="flex flex-col w-full p-5 items-center gap-6"
+          className="mt-5 flex flex-col w-full px-5 py-10 items-center gap-6"
           onSubmit={(e: any) => {
             e.preventDefault();
             submitHandler();
           }}
         >
-          <div className="relative w-2/3">
+          <div className="relative w-2/3 ">
             <input
               onChange={(e: any) => {
                 setTitle(e.target.value);
               }}
               type="text"
               id="floating_outlined"
-              className="shadow-brutalShadow block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent   border-2 border-black appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer focus:shadow-blue-600"
               placeholder=" "
             />
-            <label
-              htmlFor="floating_outlined"
-              className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1"
-            >
-              Title
-            </label>
+            <label htmlFor="floating_outlined">Title</label>
           </div>
-          <select
-            onChange={(e: any) => {
-              setCategory(e.target.value);
-            }}
-            name="category"
-            id="category"
-          >
-            <option value="Movies">Movies</option>
-            <option value="Books">Books</option>
-            <option value="Games">Games</option>
-          </select>
-          <select
-            name="status"
-            id="status"
-            onChange={(e: any) => {
-              setStatus(e.target.value);
-            }}
-          >
-            <option value="Want to Try">Want to Try</option>
-            <option value="On Progress">On Progress </option>
-            <option value="Complete">Complete</option>
-          </select>
-          <div className="relative w-2/3">
+          <div className="flex flex-col w-2/3 mt-5 ">
+            <label htmlFor="category" className="font-bold text-purple-600 ">
+              Category
+            </label>
+            <select
+              className="w-full block px-2.5 pb-2.5 pt-4  text-sm text-gray-900 bg-transparent rounded-md   bg-gray-50 border-gray-50 focus:outline-none "
+              onChange={(e: any) => {
+                setCategory(e.target.value);
+              }}
+              name="category"
+              id="category"
+            >
+              <option value="Movies">Movies</option>
+              <option value="Books">Books</option>
+              <option value="Games">Games</option>
+            </select>
+          </div>
+          <div className=" w-2/3 flex flex-col">
+            <select
+              className=" block px-2.5 pb-2.5 pt-4 text-sm text-gray-900 bg-transparent rounded-md   bg-gray-50 border-gray-50 focus:outline-none "
+              name="status"
+              id="status"
+              onChange={(e: any) => {
+                setStatus(e.target.value);
+              }}
+            >
+              <option value="Want to Try">Want to Try</option>
+              <option value="On Progress">On Progress </option>
+              <option value="Complete">Complete</option>
+            </select>
+          </div>
+          <div className="relative w-2/3 mt-5 flex flex-col">
+            <label
+              htmlFor="floating_outlined_2"
+              className="font-bold text-purple-600 relative"
+            >
+              Image
+              <span className="absolute text-extraSmall text-red-500 scale-90">
+                *OPTIONAL*
+              </span>
+            </label>
             <input
               onChange={(e) => {
                 setImage(e.target.files);
               }}
               type="file"
               id="floating_outlined_2"
-              className="shadow-brutalShadow block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent   border-2 border-black appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer focus:shadow-blue-600"
               placeholder=" "
               min="1"
               max="10"
+              className="bg-gray-100 p-2 rounded-md"
             />
+          </div>
+          <div className="relative w-2/3 mt-5 flex flex-col">
             <label
-              htmlFor="floating_outlined_2"
-              className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1"
+              htmlFor="floating_outlined_3 "
+              className="relative text-purple-600 font-bold"
             >
-              Image is OPTIONAL*
+              Rating{" "}
+              <span className="absolute text-extraSmall text-red-500 scale-90">
+                *OPTIONAL*
+              </span>
             </label>
-          </div>{" "}
-          <div className="relative w-2/3">
             <input
+              className="bg-gray-100 p-2 rounded-md"
               onChange={(e: any) => {
                 const ratingToNumber = e.target.value;
                 setRating(Number(ratingToNumber));
               }}
               type="number"
-              id="floating_outlined_2"
-              className="shadow-brutalShadow block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent   border-2 border-black appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer focus:shadow-blue-600"
+              id="floating_outlined_3"
               placeholder=" "
               min="1"
               max="10"
             />
-            <label
-              htmlFor="floating_outlined_2"
-              className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1"
-            >
-              Rating is Optional
-            </label>
           </div>
-          <button type="submit">asda</button>
+          <button
+            className="mb-5 font-bold relative z-10 text-purple-600 border-purple-600 border-2 hover:text-white  transition-all duration-300 ease-in-out px-4 py-2  cursor-pointer rounded-md before:z-minusOne  before:absolute before:bg-purple-600 hover:before:w-full  before:w-0   before:h-full before:top-0 before:left-0  before:transition-all before:duration-300 before:origin-left"
+            type="submit"
+          >
+            + ADD THING
+          </button>
         </form>
       </motion.div>
     </div>
