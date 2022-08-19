@@ -15,7 +15,7 @@ function signin({ providers }: { providers: any }) {
           </p>
           <div>
             {Object.values(providers).map((provider: any) => {
-              let img = "/" + provider.name + ".png";
+              const img = "/" + provider.name + ".png";
 
               return (
                 <div key={provider.name} className="flex items-center gap-2">
