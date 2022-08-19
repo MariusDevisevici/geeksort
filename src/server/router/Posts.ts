@@ -6,9 +6,11 @@ export const Posts = createRouter()
     input: z
       .object({
         userId: z.string(),
-        rating: z.number(),
+        rating: z.number().nullish(),
         title: z.string(),
         image: z.string().nullish(),
+        category: z.string(),
+        status: z.string(),
       })
       .nullish(),
     async resolve({ input, ctx }) {
@@ -19,6 +21,8 @@ export const Posts = createRouter()
             title: input.title,
             rating: input.rating,
             image: input.image,
+            category: input.category,
+            status: input.status,
           },
         });
       }

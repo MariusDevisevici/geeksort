@@ -10,10 +10,13 @@ module.exports = {
         customFont: ["Nunito", "sans-serif"],
       },
       backgroundColor: {
-        custom: "hsl(213,20%,11%)",
+        discord: "hsl(230,91%,86%)",
       },
       zIndex: {
         minusOne: "-1",
+      },
+      textColor: {
+        discord: "hsl(230,91%,86%)",
       },
     },
   },

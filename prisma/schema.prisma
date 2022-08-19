@@ -66,8 +66,9 @@ model Item {
   id        String   @id @default(cuid())
   image     String?
   title     String
-  rating    Int
-  category  String   @default("default")
+  rating    Int?
+  category  String
+  status    String
   createdAt DateTime @default(now())
   user      User     @relation(fields: [userId], references: [id])
   userId    String

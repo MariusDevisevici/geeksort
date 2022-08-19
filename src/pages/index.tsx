@@ -1,4 +1,3 @@
-import type { NextPage } from "next";
 import { useEffect, useState } from "react";
 import { useSession, signIn, signOut } from "next-auth/react";
 import Image from "next/image";
@@ -7,14 +6,14 @@ import { BarLoader } from "react-spinners";
 import { motion } from "framer-motion";
 import Modal from "../../components/Modal";
 import { trpc } from "../utils/trpc";
-import DefaultPostsLists from "../../components/Lists/DefaultPostsLists";
+import Link from "next/link";
 
-const Home: NextPage = () => {
+const Home = () => {
   ////
   const session = useSession();
   const router = useRouter();
   const [userPosts, setUserPosts] = useState<any>();
-  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [isOpen, setIsOpen] = useState<boolean>();
   ////
 
   const { data, status, isLoading } = trpc.useQuery([
@@ -41,70 +40,73 @@ const Home: NextPage = () => {
   if (session.status === "authenticated") {
     const userAvatar = session.data.user?.image;
     const userName = session.data.user?.name;
+    const userEmail = session.data.user?.email;
+    const userId = session.data.user?.id;
     return (
-      <div className="container m-auto flex flex-col ">
-        <div className="flex  items-center flex-wrap justify-center mt-10 gap-4 border-2 p-3 shadow-brutalShadow border-black">
+      <div className="flex ">
+        <div className="flex flex-col bg-white items-center border-r border-gray-100  h-screen">
+          <h1 className="text-4xl font-bold select-none mt-10 border-b w-full text-center pb-10 border-gray-100  ">
+            Geek<span className="text-purple-600">Sort</span>
+          </h1>
+
+          <div className="flex items-center px-10 mt-10  gap-4 border-b w-full pb-10 border-gray-100 ">
+            {userAvatar ? (
+              <div className="w-12 h-12">
+                <Image
+                  src={userAvatar}
+                  width={50}
+                  height={50}
+                  className="rounded-full"
+                ></Image>
+              </div>
+            ) : (
+              <div className="w-12 h-12 rounded-full text-center">
+                {userName?.charAt(0)}
+              </div>
+            )}
+            <div className="flex flex-col ">
+              <span className="text-xl font-bold">{userName}</span>
+              <span className="text-gray-400 -mt-2">{userEmail}</span>
+            </div>
+          </div>
+
+          <div className="mt-5 w-full text-center">
+            <ul className="flex flex-col  w-full text-2xl font-bold">
+              <li className="bg-purple-100 py-10 w-full border-b-8 border-white bg-opacity-10">
+                <Link href={"/Books"}>
+                  <a> 📚 Books</a>
+                </Link>
+              </li>
+              <li className="bg-purple-100 py-10 w-full border-b-8 border-white  bg-opacity-10">
+                <Link href={"/Movies"}>
+                  <a> 🎬 Movies</a>
+                </Link>
+              </li>
+              <li className="bg-purple-100 py-10 w-full border-b-8 border-white  bg-opacity-10">
+                <Link href={"/Games"}>
+                  <a> 🎮 Games</a>
+                </Link>
+              </li>
+            </ul>
+          </div>
           <button
-            className="text-2xl  font-black shadow-brutalShadow border-2 p-2 border-black  bg-red-400   cursor-pointer"
             onClick={() => {
               signOut();
             }}
+            className="mt-auto mb-10 font-bold relative z-10 text-red-600 border-red-600 border-2 hover:text-white  transition-all duration-300 ease-in-out px-4 py-2  cursor-pointer rounded-md before:z-minusOne  before:absolute before:bg-red-600 hover:before:w-full  before:w-0   before:h-full before:top-0 before:left-0  before:transition-all before:duration-300 before:origin-left"
           >
             Sign Out
           </button>
-          <ProfileCard imageUrl={userAvatar} userName={userName}></ProfileCard>
         </div>
-        <button
-          className="px-6 py-2 text-6xl font-black   shadow-brutalShadow border-2 border-black     bg-lime-300  mx-auto mt-10  hover:rotate-6 transition-all ease-in-out duration-300"
-          onClick={() => {
-            setIsOpen(true);
-          }}
-        >
-          +
-        </button>
 
-        {userPosts ? (
-          <DefaultPostsLists userPosts={userPosts}></DefaultPostsLists>
-        ) : (
-          <BarLoader color="purple"></BarLoader>
-        )}
-
-        {isOpen && (
-          <Modal
-            userId={session.data.user?.id || ""}
-            setIsOpen={setIsOpen}
-          ></Modal>
-        )}
+        {isOpen && <Modal setIsOpen={setIsOpen} userId={userId || ""}></Modal>}
       </div>
     );
   }
 
-  return (
-    <div className="flex   h-screen sm:flex-nowrap flex-wrap">
-      <div className="w-full flex flex-col justify-center items-center">
-        <div className=" bg-white w-3/4 py-20  flex flex-col items-center text-center justify-center shadow-sm">
-          <p className="text-2xl font-bold">
-            <span className="text-purple-600">Hi</span> there!
-          </p>
-          <button
-            className="font-bold relative z-10 text-purple-600 border-purple-600 border-2 hover:text-white  transition-all duration-300 ease-in-out px-4 py-2 my-5 cursor-pointer rounded-md before:z-minusOne  before:absolute before:bg-purple-600 hover:before:w-full  before:w-0   before:h-full before:top-0 before:left-0  before:transition-all before:duration-300 before:origin-left"
-            onClick={() => {
-              signIn();
-            }}
-          >
-            Sign In
-          </button>
-          <div className="flex gap-10">
-            <Image src={"/github.png"} width={30} height={30}></Image>
-            <Image src={"/discord.png"} width={30} height={30}></Image>
-          </div>
-        </div>
-      </div>
-      <div className="relative w-full">
-        <Image src={"/bgk.jpg"} layout="fill" objectFit="cover"></Image>
-      </div>
-    </div>
-  );
+  if (session.status === "unauthenticated") {
+    router.push("/homepage/signin");
+  }
 };
 
 export default Home;

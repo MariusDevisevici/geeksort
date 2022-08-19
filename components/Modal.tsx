@@ -1,17 +1,19 @@
 import { useState } from "react";
 import { trpc } from "../src/utils/trpc";
 import { motion } from "framer-motion";
+import { stat } from "fs";
 function Modal({ setIsOpen, userId }: { setIsOpen: any; userId: string }) {
   const [image, setImage] = useState<any>();
   const [title, setTitle] = useState<string>();
-  const [rating, setRating] = useState<number>();
-
+  const [rating, setRating] = useState<any>();
+  const [status, setStatus] = useState<string>();
+  const [category, setCategory] = useState<string>();
   //// post && db
   const createPost = trpc.useMutation("createPost");
   const submitHandler = async () => {
     const img = new FormData();
 
-    if (image && title && rating && userId) {
+    if (image && title && userId && category && status) {
       img.append("image", image[0]);
       const cloudImage = await fetch(
         "https://api.imgbb.com/1/upload?&key=e35161a7abe965194cbe49a06165db5f",
@@ -24,25 +26,33 @@ function Modal({ setIsOpen, userId }: { setIsOpen: any; userId: string }) {
       console.log(cloudImage);
       createPost.mutate({
         title,
-        rating,
+        rating: rating ? rating : null,
         userId: userId,
         image: cloudImage,
+        category,
+        status,
       });
 
       setImage(null);
       setTitle(undefined);
       setRating(undefined);
+      setCategory(undefined);
+      setStatus(undefined);
       setIsOpen(false);
     }
-    if (!image && title && rating && userId) {
+    if (!image && title && category && status && userId) {
       createPost.mutate({
         title,
-        rating,
+        rating: rating ? rating : null,
         userId: userId,
+        category,
+        status,
       });
       setImage(null);
       setTitle(undefined);
       setRating(undefined);
+      setCategory(undefined);
+      setStatus(undefined);
       setIsOpen(false);
     }
   };
@@ -87,26 +97,28 @@ function Modal({ setIsOpen, userId }: { setIsOpen: any; userId: string }) {
               Title
             </label>
           </div>
-          <div className="relative w-2/3">
-            <input
-              onChange={(e: any) => {
-                const ratingToNumber = e.target.value;
-                setRating(Number(ratingToNumber));
-              }}
-              type="number"
-              id="floating_outlined_2"
-              className="shadow-brutalShadow block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent   border-2 border-black appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer focus:shadow-blue-600"
-              placeholder=" "
-              min="1"
-              max="10"
-            />
-            <label
-              htmlFor="floating_outlined_2"
-              className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1"
-            >
-              Rating
-            </label>
-          </div>
+          <select
+            onChange={(e: any) => {
+              setCategory(e.target.value);
+            }}
+            name="category"
+            id="category"
+          >
+            <option value="Movies">Movies</option>
+            <option value="Books">Books</option>
+            <option value="Games">Games</option>
+          </select>
+          <select
+            name="status"
+            id="status"
+            onChange={(e: any) => {
+              setStatus(e.target.value);
+            }}
+          >
+            <option value="Want to Try">Want to Try</option>
+            <option value="On Progress">On Progress </option>
+            <option value="Complete">Complete</option>
+          </select>
           <div className="relative w-2/3">
             <input
               onChange={(e) => {
@@ -125,13 +137,28 @@ function Modal({ setIsOpen, userId }: { setIsOpen: any; userId: string }) {
             >
               Image is OPTIONAL*
             </label>
+          </div>{" "}
+          <div className="relative w-2/3">
+            <input
+              onChange={(e: any) => {
+                const ratingToNumber = e.target.value;
+                setRating(Number(ratingToNumber));
+              }}
+              type="number"
+              id="floating_outlined_2"
+              className="shadow-brutalShadow block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent   border-2 border-black appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer focus:shadow-blue-600"
+              placeholder=" "
+              min="1"
+              max="10"
+            />
+            <label
+              htmlFor="floating_outlined_2"
+              className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1"
+            >
+              Rating is Optional
+            </label>
           </div>
-          <button
-            type="submit"
-            className="shadow-brutalShadow bg-white text-purple-500 p-3 text-xl font-bold border-2 border-black cursor-pointer hover:rotate-6 transition-all ease-in-out duration-300"
-          >
-            Add thing
-          </button>
+          <button type="submit">asda</button>
         </form>
       </motion.div>
     </div>
