@@ -18,6 +18,7 @@ export default defineNextConfig({
       "avatars.githubusercontent.com",
       "i.ibb.co",
       "cdn.discordapp.com",
+      "geeksort.vercel.app",
     ],
   },
   reactStrictMode: true,
