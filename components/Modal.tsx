@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { trpc } from "../src/utils/trpc";
 import { motion } from "framer-motion";
-import { stat } from "fs";
+
 function Modal({ setIsOpen, userId }: { setIsOpen: any; userId: string }) {
   const [image, setImage] = useState<any>();
   const [title, setTitle] = useState<string>();
