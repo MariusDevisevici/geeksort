@@ -1,7 +1,7 @@
 import { useSession, signOut } from "next-auth/react";
 import Nav from "./Nav";
 
-function Layout({ children }: { children: JSX.Element }) {
+function Layout({ children }: { children: any }) {
   const { data: session, status } = useSession();
   if (status === "authenticated") {
     return (
