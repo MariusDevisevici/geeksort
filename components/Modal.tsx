@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { ChangeEvent, useState } from "react";
 import { trpc } from "../src/utils/trpc";
 import { motion } from "framer-motion";
 
@@ -10,7 +10,8 @@ function Modal({ setIsOpen, userId }: { setIsOpen: any; userId: string }) {
   const [category, setCategory] = useState<string>();
   //// post && db
   const createPost = trpc.useMutation("createPost");
-  const submitHandler = async () => {
+  const submitHandler = async (e: any) => {
+    e.preventDefault();
     const img = new FormData();
 
     if (image && title && userId && category && status) {
@@ -77,7 +78,7 @@ function Modal({ setIsOpen, userId }: { setIsOpen: any; userId: string }) {
           className="mt-5 flex flex-col w-full px-5 py-10 items-center gap-6"
           onSubmit={(e: any) => {
             e.preventDefault();
-            submitHandler();
+            submitHandler(e);
           }}
         >
           <div className="relative w-2/3 ">
@@ -156,7 +157,7 @@ function Modal({ setIsOpen, userId }: { setIsOpen: any; userId: string }) {
             </label>
             <input
               className="bg-gray-100 p-2 rounded-md"
-              onChange={(e: any) => {
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                 const ratingToNumber = e.target.value;
                 setRating(Number(ratingToNumber));
               }}
