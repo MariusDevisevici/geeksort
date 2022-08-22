@@ -17,11 +17,12 @@ function Layout({ children }: { children: any }) {
     );
   }
   if (status === "loading") {
-    return <>loading</>;
+    return <div>loading</div>;
   }
   if (status === "unauthenticated") {
-    return <>{children}</>;
+    return <div>{children}</div>;
   }
+  return <></>;
 }
 
 export default Layout;
