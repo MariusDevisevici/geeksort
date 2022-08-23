@@ -1,4 +1,4 @@
-import { ChangeEvent, useState } from "react";
+import { useState } from "react";
 import { trpc } from "../src/utils/trpc";
 import { motion } from "framer-motion";
 
@@ -60,15 +60,16 @@ function Modal({ setIsOpen, userId }: { setIsOpen: any; userId: string }) {
 
   return (
     <div
-      className="fixed w-full h-full  z-10 overflow-auto bg-opacity-50 bg-black top-0 left-0 flex cursor-pointer"
+      className="fixed w-full h-full  z-10 bg-opacity-50 bg-black top-0 left-0 flex cursor-pointer overflow-hidden"
       onClick={() => {
         setIsOpen(false);
       }}
     >
       <motion.div
-        initial={{ opacity: 0, scale: 0.5 }}
-        animate={{ opacity: 1, scale: 1 }}
+        initial={{ translateX: -2000 }}
+        animate={{ translateX: 0 }}
         transition={{ duration: 0.6 }}
+        exit={{ translateX: 2000 }}
         className="w-2/3 flex m-auto justify-center bg-white shadow-md rounded-md   p-2"
         onClick={(e: any) => {
           e.stopPropagation();
@@ -81,7 +82,13 @@ function Modal({ setIsOpen, userId }: { setIsOpen: any; userId: string }) {
             submitHandler(e);
           }}
         >
-          <div className="relative w-2/3 ">
+          <div className="flex flex-col w-2/3 ">
+            <label
+              htmlFor="floating_outlined"
+              className="font-bold text-purple-600 "
+            >
+              Title
+            </label>
             <input
               onChange={(e: any) => {
                 setTitle(e.target.value);
@@ -89,41 +96,52 @@ function Modal({ setIsOpen, userId }: { setIsOpen: any; userId: string }) {
               type="text"
               id="floating_outlined"
               placeholder=" "
+              className="w-full block px-2.5 pb-2.5 pt-4  text-sm text-gray-900 bg-transparent rounded-md   bg-gray-50 border-gray-50 focus:outline-purple-500"
             />
-            <label htmlFor="floating_outlined">Title</label>
           </div>
-          <div className="flex flex-col w-2/3 mt-5 ">
+          <div className="flex flex-col w-2/3  ">
             <label htmlFor="category" className="font-bold text-purple-600 ">
               Category
             </label>
             <select
-              className="w-full block px-2.5 pb-2.5 pt-4  text-sm text-gray-900 bg-transparent rounded-md   bg-gray-50 border-gray-50 focus:outline-none "
+              className="w-full block px-2.5 pb-2.5 pt-4  text-sm text-gray-900 bg-transparent rounded-md   bg-gray-50 border-gray-50  focus:outline-purple-500"
               onChange={(e: any) => {
                 setCategory(e.target.value);
               }}
               name="category"
               id="category"
+              defaultValue={"DEFAULT"}
             >
+              <option value="DEFAULT" disabled hidden>
+                Choose here
+              </option>
               <option value="Movies">Movies</option>
               <option value="Books">Books</option>
               <option value="Games">Games</option>
             </select>
           </div>
           <div className=" w-2/3 flex flex-col">
+            <label htmlFor="status" className="font-bold text-purple-600 ">
+              Status
+            </label>
             <select
-              className=" block px-2.5 pb-2.5 pt-4 text-sm text-gray-900 bg-transparent rounded-md   bg-gray-50 border-gray-50 focus:outline-none "
+              defaultValue={"DEFAULT"}
+              className=" block px-2.5 pb-2.5 pt-4 text-sm text-gray-900 bg-transparent rounded-md   bg-gray-50 border-gray-50  focus:outline-purple-500"
               name="status"
               id="status"
               onChange={(e: any) => {
                 setStatus(e.target.value);
               }}
             >
+              <option value="DEFAULT" disabled hidden>
+                Choose here
+              </option>
               <option value="Want to Try">Want to Try</option>
               <option value="On Progress">On Progress </option>
               <option value="Complete">Complete</option>
             </select>
           </div>
-          <div className="relative w-2/3 mt-5 flex flex-col">
+          <div className="relative w-2/3  flex flex-col">
             <label
               htmlFor="floating_outlined_2"
               className="font-bold text-purple-600 relative"
@@ -142,15 +160,15 @@ function Modal({ setIsOpen, userId }: { setIsOpen: any; userId: string }) {
               placeholder=" "
               min="1"
               max="10"
-              className="bg-gray-100 p-2 rounded-md"
+              className="bg-gray-100 p-2 rounded-md  focus:outline-purple-500"
             />
           </div>
-          <div className="relative w-2/3 mt-5 flex flex-col">
+          <div className="relative w-2/3  flex flex-col">
             <label
               htmlFor="floating_outlined_3 "
               className="relative text-purple-600 font-bold"
             >
-              Rating{" "}
+              Rating
               <span className="absolute text-extraSmall text-red-500 scale-90">
                 *OPTIONAL*
               </span>
