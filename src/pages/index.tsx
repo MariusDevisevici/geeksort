@@ -15,6 +15,7 @@ type userType = {
 
 const Home = ({ user }: { user: userType }) => {
   const [isOpen, setIsOpen] = useState<boolean>();
+  const [userPosts, setUserPosts] = useState<any>([]);
   const [inProgressPosts, setInProgressPosts] = useState<any>([]);
   const [wantToTryPosts, setWantToTryPosts] = useState<any>([]);
   const [completePosts, setCompletePosts] = useState<any>([]);
@@ -23,33 +24,17 @@ const Home = ({ user }: { user: userType }) => {
     { userId: user.id },
   ]);
 
-  const stsarr = ["progress", "try", "complete"];
+  const stsarr = ["On Progress", "Want to Try", "Complete"];
   useEffect(() => {
     if (status === "success" && !isLoading && data) {
-      ////in progress
-      const filterProgress = data.filter(
-        (item) => item.status === "On Progress"
-      );
-      setInProgressPosts(filterProgress);
-
-      /// want to try
-      const filterWantToTry = data.filter(
-        (item) => item.status === "Want to Try"
-      );
-
-      setWantToTryPosts(filterWantToTry);
-
-      ///complete
-
-      const filterComplete = data.filter((item) => item.status === "Complete");
-      setCompletePosts(filterComplete);
+      setUserPosts(data);
     }
 
     return;
   }, [status]);
   return (
     <div className="flex flex-col w-full">
-      <div className="lg:flex   justify-between w-full gap-4 px-5">
+      <div className="lg:flex  px-5  justify-between w-full gap-4 md:px-5 xl:px-20">
         {status === "success" &&
           !isLoading &&
           data &&
@@ -57,15 +42,7 @@ const Home = ({ user }: { user: userType }) => {
             return (
               <MainePageList
                 key={i}
-                data={
-                  el === "progress"
-                    ? inProgressPosts
-                    : el === "complete"
-                    ? completePosts
-                    : el === "try"
-                    ? wantToTryPosts
-                    : []
-                }
+                data={userPosts.filter((item: any) => item.status === el)}
                 status={el}
                 setIsOpen={setIsOpen}
               ></MainePageList>
@@ -83,7 +60,13 @@ const Home = ({ user }: { user: userType }) => {
         open modal
       </button>
       <AnimatePresence>
-        {isOpen && <Modal setIsOpen={setIsOpen} userId={user.id || ""}></Modal>}
+        {isOpen && (
+          <Modal
+            setUserPosts={setUserPosts}
+            setIsOpen={setIsOpen}
+            userId={user.id || ""}
+          ></Modal>
+        )}
       </AnimatePresence>
     </div>
   );

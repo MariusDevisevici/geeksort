@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
 import { trpc } from "../utils/trpc";
-import { signOut, getSession } from "next-auth/react";
-import Nav from "../../components/Nav";
+import { getSession } from "next-auth/react";
+import List from "../../components/Lists/List";
+
 type userType = {
   id: string;
   name: string;
@@ -9,20 +10,17 @@ type userType = {
   image: string;
 };
 function Books({ user }: { user: userType }) {
-  const [userPosts, setUserPosts] = useState<any>();
-  const [books, setBooks] = useState<any>();
-  const { data, status, isLoading } = trpc.useQuery([
-    "getUserPosts",
-    {
-      userId: user.id,
-    },
-  ]);
+  const { data, isLoading } = trpc.useQuery(["getBooks", { userId: user.id }]);
 
   if (isLoading) {
-    return <>loading...</>;
+    return <>Loading...</>;
   }
 
-  return <div className="flex"></div>;
+  return (
+    <div className="w-full overflow-hidden px-10">
+      {data && <List data={data}></List>}
+    </div>
+  );
 }
 
 export default Books;

@@ -44,4 +44,15 @@ export const Posts = createRouter()
       }
       return;
     },
+  })
+  .query("getBooks", {
+    input: z.object({
+      userId: z.string(),
+    }),
+    async resolve({ input, ctx }) {
+      const books = await ctx.prisma.item.findMany({
+        where: { userId: input.userId, category: "Books" },
+      });
+      return books;
+    },
   });

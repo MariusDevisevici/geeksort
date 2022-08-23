@@ -2,7 +2,15 @@ import { useState } from "react";
 import { trpc } from "../src/utils/trpc";
 import { motion } from "framer-motion";
 
-function Modal({ setIsOpen, userId }: { setIsOpen: any; userId: string }) {
+function Modal({
+  setIsOpen,
+  userId,
+  setUserPosts,
+}: {
+  setIsOpen: any;
+  userId: string;
+  setUserPosts: any;
+}) {
   const [image, setImage] = useState<any>();
   const [title, setTitle] = useState<string>();
   const [rating, setRating] = useState<any>();
@@ -40,6 +48,17 @@ function Modal({ setIsOpen, userId }: { setIsOpen: any; userId: string }) {
       setCategory(undefined);
       setStatus(undefined);
       setIsOpen(false);
+      setUserPosts((prevState: any) => [
+        ...prevState,
+        {
+          title,
+          rating: rating ? rating : null,
+          userId: userId,
+          image: cloudImage,
+          category,
+          status,
+        },
+      ]);
     }
     if (!image && title && category && status && userId) {
       createPost.mutate({
@@ -55,6 +74,16 @@ function Modal({ setIsOpen, userId }: { setIsOpen: any; userId: string }) {
       setCategory(undefined);
       setStatus(undefined);
       setIsOpen(false);
+      setUserPosts((prevState: any) => [
+        ...prevState,
+        {
+          title,
+          rating: rating ? rating : null,
+          userId: userId,
+          category,
+          status,
+        },
+      ]);
     }
   };
 

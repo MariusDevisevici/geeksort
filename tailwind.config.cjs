@@ -21,6 +21,9 @@ module.exports = {
       fontSize: {
         extraSmall: "10px",
       },
+      width: {
+        col10: "25%",
+      },
     },
   },
   plugins: [],
