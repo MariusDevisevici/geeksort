@@ -54,6 +54,44 @@ function List({ data }: { data: any }) {
           <option value="11">Dec</option>
         </select>
       </div>
+      <div className=" overflow-scroll whitespace-nowrap w-full ">
+        {Array(daysInMonth)
+          .fill("")
+          .map((el, i) => {
+            return (
+              <div key={i} className="inline-block w-80 ">
+                {i + 1}
+              </div>
+            );
+          })}
+
+        {data
+          .filter(
+            (el: any) =>
+              el.createdAt.getFullYear() === year &&
+              el.createdAt.getMonth() === month
+          )
+          .map((el: any) => {
+            return (
+              <div
+                className="w-80 text-center bg-red-100 rounded-full m-4 h-16 flex justify-center items-center"
+                key={el.id}
+                style={{
+                  marginLeft:
+                    el.updatedAt.getMonth() === month
+                      ? `${
+                          el.createdAt.getDate() *
+                          304 *
+                          (el.updatedAt.getDate() / el.createdAt.getDate())
+                        }px`
+                      : `${daysInMonth * 304}px`,
+                }}
+              >
+                <p> {el.title}</p>
+              </div>
+            );
+          })}
+      </div>
     </div>
   );
 }
