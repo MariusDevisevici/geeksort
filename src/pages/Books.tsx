@@ -16,11 +16,7 @@ function Books({ user }: { user: userType }) {
     return <>Loading...</>;
   }
 
-  return (
-    <div className="w-full overflow-hidden px-10">
-      {data && <List data={data}></List>}
-    </div>
-  );
+  return <div className="">{data && <List data={data}></List>}</div>;
 }
 
 export default Books;
