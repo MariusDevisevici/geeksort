@@ -1,8 +1,7 @@
-import { useState, useEffect } from "react";
-import { signOut, getSession } from "next-auth/react";
+import { useState, useEffect, forwardRef } from "react";
+import { getSession } from "next-auth/react";
 import { motion, AnimatePresence } from "framer-motion";
 import Modal from "../../components/Modal";
-import Nav from "../../components/Nav";
 import { trpc } from "../utils/trpc";
 import MainePageList from "../../components/Lists/MainePageList";
 
@@ -16,9 +15,6 @@ type userType = {
 const Home = ({ user }: { user: userType }) => {
   const [isOpen, setIsOpen] = useState<boolean>();
   const [userPosts, setUserPosts] = useState<any>([]);
-  const [inProgressPosts, setInProgressPosts] = useState<any>([]);
-  const [wantToTryPosts, setWantToTryPosts] = useState<any>([]);
-  const [completePosts, setCompletePosts] = useState<any>([]);
   const { data, isLoading, status } = trpc.useQuery([
     "getUserPosts",
     { userId: user.id },
@@ -34,7 +30,7 @@ const Home = ({ user }: { user: userType }) => {
   }, [status]);
   return (
     <div className="flex flex-col w-full">
-      <div className="lg:flex  px-5  justify-between w-full gap-4 md:px-5 xl:px-20">
+      <div className="lg:flex  px-5  justify-between w-full gap-4 md:px-5 xl:px-28">
         {status === "success" &&
           !isLoading &&
           data &&
@@ -42,7 +38,7 @@ const Home = ({ user }: { user: userType }) => {
             return (
               <MainePageList
                 key={i}
-                data={userPosts.filter((item: any) => item.status === el)}
+                data={data.filter((item: any) => item.status === el)}
                 status={el}
                 setIsOpen={setIsOpen}
               ></MainePageList>

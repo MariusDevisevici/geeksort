@@ -7,7 +7,8 @@ import { SessionProvider } from "next-auth/react";
 import "../styles/globals.css";
 import Head from "next/head";
 import Layout from "../../components/Layout";
-
+import { DndProvider } from "react-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
 const MyApp: AppType = ({
   Component,
   pageProps: { session, ...pageProps },
@@ -19,9 +20,11 @@ const MyApp: AppType = ({
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <>
-        <Layout>
-          <Component {...pageProps} />
-        </Layout>
+        <DndProvider backend={HTML5Backend}>
+          <Layout>
+            <Component {...pageProps} />
+          </Layout>
+        </DndProvider>
       </>
     </SessionProvider>
   );

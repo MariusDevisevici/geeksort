@@ -1,23 +1,35 @@
 import Image from "next/image";
 import {} from "react";
 import { useDrag } from "react-dnd";
+import { motion } from "framer-motion";
 function MainPageItem({
   image,
+  id,
   category,
   title,
+  status,
 }: {
   image: string;
   category: string;
   title: string;
+  id: string;
+  status: string;
 }) {
   const [{ isDragging }, drag] = useDrag(() => ({
     type: "div",
+    item: {
+      id: id,
+      sts: status,
+      category: category,
+      title: title,
+      image: image,
+    },
     collect: (monitor) => ({
       isDragging: !!monitor.isDragging(),
     }),
   }));
   return (
-    <div
+    <motion.div
       ref={drag}
       className={`flex items-center justify-around my-4 bg-gray-50 px-4 py-2 font-bold cursor-pointer `}
     >
@@ -46,7 +58,7 @@ function MainPageItem({
       ) : (
         <div className="w-12 h-12 rounded-full bg-gray-200"></div>
       )}
-    </div>
+    </motion.div>
   );
 }
 

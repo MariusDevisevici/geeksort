@@ -55,4 +55,19 @@ export const Posts = createRouter()
       });
       return books;
     },
+  })
+  .mutation("statusUpdate", {
+    input: z.object({
+      postId: z.string(),
+      updatedStatus: z.string(),
+    }),
+    async resolve({ input, ctx }) {
+      const updatePost = await ctx.prisma.item.update({
+        where: { id: input.postId },
+        data: {
+          status: input.updatedStatus,
+        },
+      });
+      return updatePost;
+    },
   });
