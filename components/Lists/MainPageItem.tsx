@@ -32,7 +32,11 @@ function MainPageItem({
   return (
     <motion.div
       ref={drag}
-      className={`flex items-center justify-around my-4 bg-gray-50 px-4 py-2 font-bold cursor-pointer `}
+      className={`flex items-center justify-around my-4 bg-gray-50 px-4 py-2 font-bold cursor-pointer ${
+        isDragging ? "hidden" : ""
+      } `}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
     >
       <span className="text-ellipsis w-2/6 whitespace-nowrap overflow-hidden">
         {title}
