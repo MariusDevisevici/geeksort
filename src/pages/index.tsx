@@ -14,38 +14,24 @@ type userType = {
 
 const Home = ({ user }: { user: userType }) => {
   const [isOpen, setIsOpen] = useState<boolean>();
-  const [userPosts, setUserPosts] = useState<any>([]);
-  const { data, isLoading, status } = trpc.useQuery([
-    "getUserPosts",
-    { userId: user.id },
-  ]);
-
   const stsarr = ["On Progress", "Want to Try", "Complete"];
-  useEffect(() => {
-    if (status === "success" && !isLoading && data) {
-      setUserPosts(data);
-    }
-
-    return;
-  }, [status]);
+  const [userPosts, setUserPosts] = useState<any>([]);
   return (
     <div className="flex flex-col w-full">
       <div className="lg:flex  px-5  justify-between w-full gap-4 md:px-5 xl:px-28">
-        {status === "success" &&
-          !isLoading &&
-          data &&
+        {user &&
           stsarr.map((el, i) => {
             return (
               <MainePageList
+                userPosts={userPosts}
+                user={user}
                 key={i}
-                data={data.filter((item: any) => item.status === el)}
-                status={el}
+                statusUp={el}
                 setIsOpen={setIsOpen}
+                setUserPosts={setUserPosts}
               ></MainePageList>
             );
           })}
-        {status === "loading" && <>Loading...</>}
-        {status === "error" && <>Error</>}
       </div>
 
       <button

@@ -74,3 +74,14 @@ model Item {
   user      User     @relation(fields: [userId], references: [id])
   userId    String
 }
+
+
+
+
+
+
+
+
+
+
+

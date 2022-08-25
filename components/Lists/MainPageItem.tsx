@@ -28,6 +28,7 @@ function MainPageItem({
       isDragging: !!monitor.isDragging(),
     }),
   }));
+
   return (
     <motion.div
       ref={drag}
