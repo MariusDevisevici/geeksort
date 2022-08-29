@@ -15,7 +15,7 @@ function Nav({
 }) {
   const router = useRouter();
   return (
-    <div className="flex flex-col bg-white items-center border-r border-gray-100  md:h-screen ">
+    <div className="flex flex-col bg-white items-center border-r border-gray-100 fixed overflow-auto h-full   w-96 ">
       <h1 className="text-2xl lg:text-4xl font-bold select-none mt-10 border-b w-full text-center pb-10 border-gray-100  ">
         Geek<span className="text-purple-600">Sort</span>
       </h1>

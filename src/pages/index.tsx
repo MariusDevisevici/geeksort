@@ -17,7 +17,7 @@ const Home = ({ user }: { user: userType }) => {
   const stsarr = ["On Progress", "Want to Try", "Complete"];
   const [userPosts, setUserPosts] = useState<any>([]);
   return (
-    <div className="flex flex-col w-full">
+    <div className="flex flex-col w-full ml-96 ">
       <div className="lg:flex  px-5  justify-between w-full gap-4 md:px-5 xl:px-28">
         {user &&
           stsarr.map((el, i) => {
