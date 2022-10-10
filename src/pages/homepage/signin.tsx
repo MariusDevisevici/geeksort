@@ -19,7 +19,12 @@ function signin({ providers }: { providers: any }) {
 
               return (
                 <div key={provider.name} className="flex items-center gap-2">
-                  <Image src={img} width={40} height={40}></Image>
+                  <Image
+                    alt="provider-logo"
+                    src={img}
+                    width={40}
+                    height={40}
+                  ></Image>
                   <button
                     className={
                       provider.name === "Discord"

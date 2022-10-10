@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import Modal from "../../components/Modal";
 import { trpc } from "../utils/trpc";
 import MainePageList from "../../components/Lists/MainePageList";
+import DisplayUsers from "../../components/Lists/DisplayUsers";
 
 type userType = {
   id: string;
@@ -18,6 +19,7 @@ const Home = ({ user }: { user: userType }) => {
   const [userPosts, setUserPosts] = useState<any>([]);
   return (
     <div className="flex flex-col w-full ml-96 ">
+      <DisplayUsers user={user.id}></DisplayUsers>
       <div className="lg:flex  px-5  justify-between w-full gap-4 md:px-5 xl:px-28">
         {user &&
           stsarr.map((el, i) => {
@@ -35,11 +37,12 @@ const Home = ({ user }: { user: userType }) => {
       </div>
 
       <button
+        className="mb-5 mt-10 w-fit m-auto font-bold relative z-10 text-purple-600 border-purple-600 border-2 hover:text-white  transition-all duration-300 ease-in-out px-4 py-2  cursor-pointer rounded-md before:z-minusOne  before:absolute before:bg-purple-600 hover:before:w-full  before:w-0   before:h-full before:top-0 before:left-0  before:transition-all before:duration-300 before:origin-left"
         onClick={() => {
           setIsOpen(true);
         }}
       >
-        open modal
+        + ADD THING
       </button>
       <AnimatePresence>
         {isOpen && (

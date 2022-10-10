@@ -1,4 +1,5 @@
 import { useSession, signOut } from "next-auth/react";
+import { BarLoader } from "react-spinners";
 import Nav from "./Nav";
 
 function Layout({ children }: { children: any }) {
@@ -17,7 +18,11 @@ function Layout({ children }: { children: any }) {
     );
   }
   if (status === "loading") {
-    return <div>loading</div>;
+    return (
+      <div className="flex justify-center w-full pt-96">
+        <BarLoader color="purple"></BarLoader>
+      </div>
+    );
   }
   if (status === "unauthenticated") {
     return <div>{children}</div>;

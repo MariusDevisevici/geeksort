@@ -1,6 +1,6 @@
 import { createRouter } from "./context";
 import { z } from "zod";
-import { resolve } from "path";
+
 export const Posts = createRouter()
   .mutation("createPost", {
     input: z

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import MainPageItem from "./MainPageItem";
 import { useDrop } from "react-dnd";
 import { trpc } from "../../src/utils/trpc";
-
+import { motion } from "framer-motion";
 type userType = {
   id: string;
   name: string;
@@ -82,13 +82,42 @@ function MainePageList({
 
   useEffect(() => {
     if (userPosts.length > 0) {
-      console.log("test");
       setTest(true);
     }
   }, [userPosts]);
 
   if (isLoading) {
-    return <>Loading..</>;
+    return (
+      <div>
+        <motion.div
+          className={`md:w-2/3  md:m-auto md:mt-10 lg:w-2/4 bg-white shadow-md mt-10  h-80 border-t-8 ${
+            statusUp === "Complete"
+              ? "border-green-500"
+              : statusUp === "Want to Try"
+              ? "border-red-500"
+              : "border-blue-500"
+          } rounded-lg`}
+        ></motion.div>
+        <motion.div
+          className={`md:w-2/3  md:m-auto md:mt-10 lg:w-2/4 bg-white shadow-md mt-10  h-80 border-t-8 ${
+            statusUp === "Complete"
+              ? "border-green-500"
+              : statusUp === "Want to Try"
+              ? "border-red-500"
+              : "border-blue-500"
+          } rounded-lg`}
+        ></motion.div>
+        <motion.div
+          className={`md:w-2/3  md:m-auto md:mt-10 lg:w-2/4 bg-white shadow-md mt-10  h-80 border-t-8 ${
+            statusUp === "Complete"
+              ? "border-green-500"
+              : statusUp === "Want to Try"
+              ? "border-red-500"
+              : "border-blue-500"
+          } rounded-lg`}
+        ></motion.div>
+      </div>
+    );
   }
 
   if (test) {
